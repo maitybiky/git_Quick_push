@@ -86,7 +86,7 @@ function handle_child_process(child, callback) {
   // listens for the standard output (stdout) of the child process
   let ERR_CODE = false;
   child.stdout.on("data", (data) => {
-    if (data.includes("Your branch is up to date with")) ERR_CODE = true;
+    if (data.includes("working tree clean")) ERR_CODE = true;
     console.log(`${data}`);
   });
 
