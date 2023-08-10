@@ -46,6 +46,7 @@ function programIntro() {
 function gitAdd() {
   const git_add = spawn(command_name, ["add", ...files]);
   handle_child_process(git_add, (callback) => {
+    if(callback()) return;
     console.log(changeTextColor("Changes tracked", 32));
     commit();
   });
@@ -56,7 +57,7 @@ const commit = () => {
   const git_commit = spawn(command_name, ["commit", "-m", commit_message]);
 
   handle_child_process(git_commit, (callback) => {
-    if (callback !== "updated"){
+    if (!callback()){
       console.log(changeTextColor("Changes Committed!", 32));
       push();
     } else{
@@ -74,7 +75,7 @@ const push = () => {
   const git_push = spawn(command_name, ["push", "origin", brach_name]);
   handle_child_process(git_push, (callback) => {
     stopLoading(loadingAnimation);
-
+if(callback()) return;
     console.log(changeTextColor(`Changes pushed to ${brach_name}`, 32));
   });
 };
@@ -83,9 +84,9 @@ const push = () => {
 
 function handle_child_process(child, callback) {
   // listens for the standard output (stdout) of the child process
-  let ERR_CODE = "";
+  let ERR_CODE = true;
   child.stdout.on("data", (data) => {
-    if (data.includes("Your branch is up to date with")) ERR_CODE = "updated";
+    if (data.includes("Your branch is up to date with")) ERR_CODE = false;
     console.log(`${data}`);
   });
 
@@ -93,11 +94,13 @@ function handle_child_process(child, callback) {
   child.stderr.on("data", (data) => {
     console.error(`
 : ${data}`);
+callback(true);
   });
 
   // Listen for 'error' event from the child process
   child.on("error", (error) => {
     console.error(`git error: ${error}`);
+    callback(true);
   });
 
   // Listen for 'close' event from the child process
