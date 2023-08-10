@@ -21,9 +21,9 @@ Install my-project with npm
 
 ## Process
 
-- git add <files-name>
-- git commit -m <commit-message>
-- git push origin <branch-name>
+- git add files-name
+- git commit -m commit-message
+- git push origin branch-name
 ## Example
 ```bash
   gytfast "initial commit" main . 
