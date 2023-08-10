@@ -1,0 +1,22 @@
+{
+  "name": "gytfast",
+  "version": "1.0.1",
+  "description": "A hassle-free npm module for automating Git directory tracking, committing changes, and pushing to your remote repository with a single, simple command",
+  "main": "index.js",
+  "bin": {
+    "gytfast": "bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/maitybiky/git_Quick_push.git"
+  },
+  "author": "surajit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maitybiky/git_Quick_push/issues"
+  },
+  "homepage": "https://github.com/maitybiky/git_Quick_push#readme"
+}
