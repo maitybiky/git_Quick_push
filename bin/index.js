@@ -3,7 +3,7 @@
 // import { spawn } from "child_process";
 // import frames from "./animationframes.js";
 const { spawn } = require("child_process");
-const frames = require("./animationframes.js");
+const {frames} = require("./animationframes.js");
 //!? handling command argument
 const args = process.argv.slice(2);
 const commit_message = args[0];
@@ -56,9 +56,13 @@ const commit = () => {
   const git_commit = spawn(command_name, ["commit", "-m", commit_message]);
 
   handle_child_process(git_commit, (callback) => {
-    console.log(changeTextColor("Changes Committed!", 32));
-
-    push();
+    if (callback !== "updated"){
+      console.log(changeTextColor("Changes Committed!", 32));
+      push();
+    } else{
+      console.log(changeTextColor(`Work tree clean in [${files.map(it=>it)}]`, 33));
+    }
+   
   });
 };
 
@@ -70,9 +74,8 @@ const push = () => {
   const git_push = spawn(command_name, ["push", "origin", brach_name]);
   handle_child_process(git_push, (callback) => {
     stopLoading(loadingAnimation);
-    console.log('callback', callback)
-    if (callback !== "uptodate")
-      console.log(changeTextColor(`Changes pushed to ${brach_name}`, 32));
+
+    console.log(changeTextColor(`Changes pushed to ${brach_name}`, 32));
   });
 };
 
@@ -82,14 +85,13 @@ function handle_child_process(child, callback) {
   // listens for the standard output (stdout) of the child process
   let ERR_CODE = "";
   child.stdout.on("data", (data) => {
+    if (data.includes("Your branch is up to date with")) ERR_CODE = "updated";
     console.log(`${data}`);
   });
 
   // listens for the standard error (stderr) of the child process
   child.stderr.on("data", (data) => {
-    ERR_CODE = "uptodate";
     console.error(`
-    
 : ${data}`);
   });
 
