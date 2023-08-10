@@ -93,6 +93,7 @@ function handle_child_process(child, callback) {
   // listens for the standard error (stderr) of the child process
   child.stderr.on("data", (data) => {
     console.error(`
+    j
 : ${data}`);
 callback(true);
   });
