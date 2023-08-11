@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-
-// import { spawn } from "child_process";
-// import frames from "./animationframes.js";
 const { spawn } = require("child_process");
-const {frames} = require("./animationframes.js");
+const path  = require("path");
+const { frames } = require("./animationframes.js");
+const fs = require('fs');
+const directoryPath = process.cwd();
 //!? handling command argument
 const args = process.argv.slice(2);
 const commit_message = args[0];
@@ -13,7 +13,13 @@ const command_name = "git";
 
 //? if neccessery argument provided then continue
 if (args.length >= 3) {
-  programIntro();
+  fs.readdir(directoryPath, (err, f) => {
+    if (err) {
+      console.error("Error reading directory:", err);
+    }
+    programIntro(f);
+  });
+  
   gitAdd();
 } else {
   console.log(
@@ -30,13 +36,19 @@ if (args.length >= 3) {
 
 //!? program intro in terminal
 
-function programIntro() {
-  console.log("Files to be track :", `${files[0] == "." ? " All" : ""}`);
-  if (files[0] != ".") {
+function programIntro(currentfiles) {
+  console.log(changeTextColor(`Files to be tracked: `,35));
+  if (args[2] == ".") {
+   
+    currentfiles.forEach(element => {
+      console.log(changeTextColor(element,36));
+    });
+  
+  } else {
     console.table(files);
   }
-  console.log(`Commit message    : `, commit_message);
-  console.log(`Brach name        : `, brach_name);
+  console.log(changeTextColor(`Commit message    : ${commit_message}`,35));
+  console.log(changeTextColor(`Brach name        : ${brach_name}`,35));
   console.log("");
 
   console.log("");
@@ -46,7 +58,6 @@ function programIntro() {
 function gitAdd() {
   const git_add = spawn(command_name, ["add", ...files]);
   handle_child_process(git_add, (callback) => {
-   
     console.log(changeTextColor("Changes tracked", 32));
     commit();
   });
@@ -57,13 +68,14 @@ const commit = () => {
   const git_commit = spawn(command_name, ["commit", "-m", commit_message]);
 
   handle_child_process(git_commit, (callback) => {
-    if (!callback){
+    if (!callback) {
       console.log(changeTextColor("Changes Committed!", 32));
       push();
-    } else{
-      console.log(changeTextColor(`Work tree clean in [${files.map(it=>it)}]`, 33));
+    } else {
+      console.log(
+        changeTextColor(`Work tree clean in ${path.basename(directoryPath)}`, 33)
+      );
     }
-   
   });
 };
 
@@ -75,8 +87,8 @@ const push = () => {
   const git_push = spawn(command_name, ["push", "origin", brach_name]);
   handle_child_process(git_push, (callback) => {
     stopLoading(loadingAnimation);
-if(!callback)   console.log(changeTextColor(`Changes pushed to ${brach_name}`, 32));
-   
+    if (!callback)
+      console.log(changeTextColor(`Changes pushed to ${brach_name}`, 32));
   });
 };
 
@@ -94,7 +106,7 @@ function handle_child_process(child, callback) {
   child.stderr.on("data", (data) => {
     console.error(`
 : ${data}`);
-callback(true);
+    callback(true);
   });
 
   // Listen for 'error' event from the child process
