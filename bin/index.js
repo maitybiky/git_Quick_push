@@ -47,8 +47,8 @@ function programIntro(currentfiles) {
   } else {
     console.table(files);
   }
-  console.log(changeTextColor(`Commit message    : ${commit_message}`,35));
-  console.log(changeTextColor(`Brach name        : ${brach_name}`,35));
+  console.log(changeTextColor(`Commit message     : ${commit_message}`,35));
+  console.log(changeTextColor(`Brach name         : ${brach_name}`,35));
   console.log("");
 
   console.log("");
@@ -104,15 +104,18 @@ function handle_child_process(child, callback) {
 
   // listens for the standard error (stderr) of the child process
   child.stderr.on("data", (data) => {
+    callback(true);
+    ERR_CODE = true
     console.error(`
 : ${data}`);
-    callback(true);
+  
   });
 
   // Listen for 'error' event from the child process
   child.on("error", (error) => {
     console.error(`git error: ${error}`);
     callback(true);
+    ERR_CODE = true
   });
 
   // Listen for 'close' event from the child process
