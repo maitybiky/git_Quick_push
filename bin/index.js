@@ -104,9 +104,12 @@ function handle_child_process(child, callback) {
 
   // listens for the standard error (stderr) of the child process
   child.stderr.on("data", (data) => {
-    callback(true);
-    ERR_CODE = true
-    console.error(`ll
+    if(data.includes("up-to-date")){
+      callback(true);
+      ERR_CODE = true
+    }
+   
+    console.error(`
 : ${data}`);
   
   });
