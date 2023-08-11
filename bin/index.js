@@ -40,9 +40,9 @@ function programIntro(currentfiles) {
   console.log(changeTextColor(`Files to be tracked: `,35));
   if (args[2] == ".") {
    
-    currentfiles.forEach(element => {
-      console.log(changeTextColor(element,36));
-    });
+   let allFiles= currentfiles.join("] [")
+      console.log(changeTextColor(`[ ${allFiles} ]`,36));
+
   
   } else {
     console.table(files);
