@@ -70,12 +70,12 @@ const commit = () => {
   handle_child_process(git_commit, (callback) => {
     if (!callback) {
       console.log(changeTextColor("Changes Committed!", 32));
-      push();
     } else {
       console.log(
         changeTextColor(`Work tree clean in ${path.basename(directoryPath)}`, 33)
       );
     }
+    push();
   });
 };
 
