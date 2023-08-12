@@ -92,8 +92,10 @@ function handle_child_process(child, callback) {
     if (data.includes("working tree clean")) ERR_CODE = true;
     if (("child.argv", child.spawnargs[1] == "status")) {
       const lines = `${data}`.split("\n");
-      const modifiedLines = lines.filter((line) => line.includes("modified:"));
-      modifiedLines.forEach((lines) => console.log(lines.replace("modified:")));
+      let trimmedLine=lines.map(it=>it.trim())
+      console.log('lines', trimmedLine)
+      const modifiedLines = trimmedLine.filter((line) => !(line[0]=="("&&line[line.length-1]==")"));
+      modifiedLines.forEach((lines) => console.log(lines));
     } else {
       console.log(`${data}`);
     }
