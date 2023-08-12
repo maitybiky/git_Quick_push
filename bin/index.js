@@ -97,7 +97,7 @@ function handle_child_process(child, callback) {
       );
       modifiedLines.forEach((lines) => console.log(lines));
     } else {
-      console.log(`d${data}`);
+      console.log(`${data}`);
     }
   });
 
@@ -109,7 +109,7 @@ function handle_child_process(child, callback) {
     }
 
     console.error(`
-: ${data}`);
+:ff ${data}`);
   });
 
   // Listen for 'error' event from the child process
