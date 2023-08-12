@@ -36,7 +36,7 @@ function programIntro(currentfiles) {
   console.log("");
   const gitstat = spawn(command_name, ["status"]);
   handle_child_process(gitstat, () => {
-    console.log(changeTextColor(`[git status]`, 36));
+    console.log("");
     gitAdd();
   });
 }
@@ -95,7 +95,7 @@ function handle_child_process(child, callback) {
       const lines = `${data}`.split("\n");
       const modifiedLines = lines.filter((line) => line.includes("modified:"));
 
-      console.log(modifiedLines);
+      console.log(`${modifiedLines}`.replace("\t"," "));
     } else {
       console.log(`${data}`);
     }

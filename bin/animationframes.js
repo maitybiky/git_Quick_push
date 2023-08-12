@@ -29,7 +29,7 @@ let f1 = grid.map((item, ind) => {
   arr[ind] = ":";
   return arr.join("");
 });
-
+ 
 
 let f5 = grid.map((item, index) => {
   let arr = Array.from(item);
