@@ -18,13 +18,15 @@ if (args.length >= 3) {
   console.log(
     changeTextColor("Please provide all three necessary arguments: ", 33)
   );
+  console.log("");
   console.warn(
     changeTextColor(
-      "gitup <commit_message_inside_''> <brach_name> <files)>",
+      "gytfast <commit_message_inside_''> <brach_name> <files)>",
       32
     )
   );
-  console.info("Example:  gitup 'design completed..' main .");
+  console.log("");
+  console.info("Example:  gytfast 'design completed..' main .");
 }
 
 // program intro in terminal
