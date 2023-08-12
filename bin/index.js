@@ -86,6 +86,7 @@ const push = () => {
 //!? Handling child process
 
 function handle_child_process(child, callback) {
+  console.log('child.spawnargs[1]', child.spawnargs)
   // listens for the standard output (stdout) of the child process
   let ERR_CODE = false;
   child.stdout.on("data", (data) => {
