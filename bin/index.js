@@ -45,7 +45,7 @@ function programIntro(currentfiles) {
 function gitAdd() {
   const git_add = spawn(command_name, ["add", ...files]);
   handle_child_process(git_add, (callback) => {
-    console.log(changeTextColor("Changes staged", 32));
+    console.log(changeTextColor("Changes staged \u2714", 32));
 
     commit();
   });
@@ -57,7 +57,7 @@ const commit = () => {
 
   handle_child_process(git_commit, (callback) => {
     if (!callback) {
-      console.log(changeTextColor("Changes Committed!", 32));
+      console.log(changeTextColor("Changes Committed! \u2714", 32));
     } else {
       console.log(
         changeTextColor(
@@ -79,7 +79,7 @@ const push = () => {
   handle_child_process(git_push, (callback) => {
     stopLoading(loadingAnimation);
     if (!callback)
-      console.log(changeTextColor(`Changes pushed to ${brach_name}`, 32));
+      console.log(changeTextColor(`Changes pushed to ${brach_name} \u2714`, 32));
   });
 };
 
