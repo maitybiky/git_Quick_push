@@ -32,7 +32,7 @@ if (args.length >= 3) {
 function programIntro(currentfiles) {
   console.log(changeTextColor(`Commit message     : ${commit_message}`, 35));
   console.log(changeTextColor(`Brach name         : ${brach_name}`, 35));
-  console.log(changeTextColor(`[git status]`, 36));
+ 
 
 
   gitAdd(); //? initiating git add command
@@ -45,6 +45,7 @@ function gitAdd() {
   handle_child_process(git_add, (callback) => {
     console.log(changeTextColor("Changes staged \u2714", 32));
     //? showing git status before commite
+    console.log(changeTextColor(`[git status]`, 36));
     const gitstat = spawn(command_name, ["status"]);
     handle_child_process(gitstat, () => {
       console.log("");
