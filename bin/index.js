@@ -27,17 +27,18 @@ if (args.length >= 3) {
   console.info("Example:  gitup 'design completed..' main .");
 }
 
-//!? program intro in terminal
+// program intro in terminal
 
 function programIntro(currentfiles) {
   console.log(changeTextColor(`Commit message     : ${commit_message}`, 35));
   console.log(changeTextColor(`Brach name         : ${brach_name}`, 35));
   console.log(changeTextColor(`[git status]`, 36));
 
+  //? initiating git status command 
   const gitstat = spawn(command_name, ["status"]);
   handle_child_process(gitstat, () => {
     console.log("");
-    gitAdd();
+    gitAdd(); //? initiating git add command
   });
 }
 
@@ -46,8 +47,7 @@ function gitAdd() {
   const git_add = spawn(command_name, ["add", ...files]);
   handle_child_process(git_add, (callback) => {
     console.log(changeTextColor("Changes staged \u2714", 32));
-
-    commit();
+    commit(); //? initiaing git commit command
   });
 }
 
@@ -56,7 +56,8 @@ const commit = () => {
   const git_commit = spawn(command_name, ["commit", "-m", commit_message]);
 
   handle_child_process(git_commit, (callback) => {
-    if (!callback) {
+    // ? callback is an error status . initially false but if there nothing to commit , work tree cleaned then it will be true
+    if (!callback) { 
       console.log(changeTextColor("Changes Committed! \u2714", 32));
     } else {
       console.log(
@@ -66,7 +67,7 @@ const commit = () => {
         )
       );
     }
-    push();
+    push(); //? initiating push command
   });
 };
 
@@ -85,9 +86,11 @@ const push = () => {
 
 function handle_child_process(child, callback) {
   // listens for the standard output (stdout) of the child process
-  let ERR_CODE = false;
+  let ERR_CODE = false; // this varible will be true if staged files already commited and send in call back 
   child.stdout.on("data", (data) => {
     if (data.includes("working tree clean")) ERR_CODE = true;
+
+    //This will filter the line where file name and modifcation type shown  and remove extraa suggestion message from git because this will be done auto later
     if (("child.argv", child.spawnargs[1] == "status")) {
       const lines = `${data}`.split("\n");
       let trimmedLine = lines.map((it) => it.trim());
@@ -109,14 +112,17 @@ function handle_child_process(child, callback) {
 
     console.error(`
  :  ${data}`);
+
+ //checking pushed succeced or not 
     if (`${data}`.includes(`${brach_name} -> ${brach_name}`)) {
       console.log(
         changeTextColor(`Changes pushed to ${brach_name} \u2714`, 32)
       );
-    }else{
-      if(child.spawnargs[1]=="push"){
-
-        console.log(changeTextColor("seems failed to push check above message",31));
+    } else {
+      if (child.spawnargs[1] == "push") {
+        console.log(
+          changeTextColor("seems failed to push check above message", 31)
+        );
       }
     }
   });
@@ -135,7 +141,7 @@ function handle_child_process(child, callback) {
   });
 }
 
-//!? Loading
+//!? Loading Animation 
 function showLoadingAnimation() {
   // const frames = [`(-(-_(-_-)_-)-)`, `-(_(-_(-)_-)_)-`];
   // const frames=["+","x"]
@@ -158,7 +164,7 @@ function showLoadingAnimation() {
   return animation; // Return the interval ID so you can clear it later
 }
 
-// Simulate loading for 5 seconds
+// Loading stop
 function stopLoading(loadingAnimation) {
   clearInterval(loadingAnimation); // Clear the animation interval
   process.stdout.clearLine();
