@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 const { spawn } = require("child_process");
-const path  = require("path");
+const path = require("path");
 const { frames } = require("./animationframes.js");
-const fs = require('fs');
+const fs = require("fs");
 const directoryPath = process.cwd();
 //!? handling command argument
 const args = process.argv.slice(2);
@@ -13,14 +13,7 @@ const command_name = "git";
 
 //? if neccessery argument provided then continue
 if (args.length >= 3) {
-  fs.readdir(directoryPath, (err, f) => {
-    if (err) {
-      console.error("Error reading directory:", err);
-    }
-    programIntro(f);
-  });
-  
-  gitAdd();
+  programIntro();
 } else {
   console.log(
     changeTextColor("Please provide all three necessary arguments: ", 33)
@@ -37,21 +30,15 @@ if (args.length >= 3) {
 //!? program intro in terminal
 
 function programIntro(currentfiles) {
-  console.log(changeTextColor(`Files to be tracked: `,35));
-  if (args[2] == ".") {
-   
-   let allFiles= currentfiles.join("] [")
-      console.log(changeTextColor(`[ ${allFiles} ]`,36));
-
-  
-  } else {
-    console.table(files);
-  }
-  console.log(changeTextColor(`Commit message     : ${commit_message}`,35));
-  console.log(changeTextColor(`Brach name         : ${brach_name}`,35));
+  console.log(changeTextColor(`Commit message     : ${commit_message}`, 35));
+  console.log(changeTextColor(`Brach name         : ${brach_name}`, 35));
+  console.log(changeTextColor(`[git status]`, 36));
   console.log("");
-
-  console.log("");
+  const gitstat = spawn(command_name, ["status"]);
+  handle_child_process(gitstat, () => {
+    console.log(changeTextColor(`[git status]`, 36));
+    gitAdd();
+  });
 }
 
 //!? Tracking Changes
@@ -59,6 +46,7 @@ function gitAdd() {
   const git_add = spawn(command_name, ["add", ...files]);
   handle_child_process(git_add, (callback) => {
     console.log(changeTextColor("Changes tracked", 32));
+
     commit();
   });
 }
@@ -72,7 +60,10 @@ const commit = () => {
       console.log(changeTextColor("Changes Committed!", 32));
     } else {
       console.log(
-        changeTextColor(`Work tree clean in ${path.basename(directoryPath)}`, 33)
+        changeTextColor(
+          `Work tree clean in ${path.basename(directoryPath)}`,
+          33
+        )
       );
     }
     push();
@@ -95,6 +86,7 @@ const push = () => {
 //!? Handling child process
 
 function handle_child_process(child, callback) {
+  console.log('child.argv', child.argv)
   // listens for the standard output (stdout) of the child process
   let ERR_CODE = false;
   child.stdout.on("data", (data) => {
@@ -104,21 +96,20 @@ function handle_child_process(child, callback) {
 
   // listens for the standard error (stderr) of the child process
   child.stderr.on("data", (data) => {
-    if(data.includes("up-to-date")){
+    if (data.includes("up-to-date")) {
       callback(true);
-      ERR_CODE = true
+      ERR_CODE = true;
     }
-   
+
     console.error(`
 : ${data}`);
-  
   });
 
   // Listen for 'error' event from the child process
   child.on("error", (error) => {
     console.error(`git error: ${error}`);
     callback(true);
-    ERR_CODE = true
+    ERR_CODE = true;
   });
 
   // Listen for 'close' event from the child process
