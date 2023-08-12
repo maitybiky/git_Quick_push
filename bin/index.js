@@ -86,7 +86,6 @@ const push = () => {
 //!? Handling child process
 
 function handle_child_process(child, callback) {
-  
   // listens for the standard output (stdout) of the child process
   let ERR_CODE = false;
   child.stdout.on("data", (data) => {
@@ -94,8 +93,7 @@ function handle_child_process(child, callback) {
     if (("child.argv", child.spawnargs[1] == "status")) {
       const lines = `${data}`.split("\n");
       const modifiedLines = lines.filter((line) => line.includes("modified:"));
-
-      console.log(`${modifiedLines}`.replace("\t","\n"));
+      modifiedLines.forEach((lines) => console.log(lines.replace("modified:")));
     } else {
       console.log(`${data}`);
     }
