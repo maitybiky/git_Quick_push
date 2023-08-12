@@ -86,12 +86,12 @@ const push = () => {
 //!? Handling child process
 
 function handle_child_process(child, callback) {
-  console.log('child.spawnargs[1]', child.spawnargs)
+  
   // listens for the standard output (stdout) of the child process
   let ERR_CODE = false;
   child.stdout.on("data", (data) => {
     if (data.includes("working tree clean")) ERR_CODE = true;
-    if (("child.argv", child.spawnargs[1] == "add")) {
+    if (("child.argv", child.spawnargs[1] == "status")) {
       const lines = `${data}`.split("\n");
       const modifiedLines = lines.filter((line) => line.includes("modified:"));
 
