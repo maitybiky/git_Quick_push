@@ -93,7 +93,6 @@ function handle_child_process(child, callback) {
     if (("child.argv", child.spawnargs[1] == "status")) {
       const lines = `${data}`.split("\n");
       let trimmedLine=lines.map(it=>it.trim())
-      console.log('lines', trimmedLine)
       const modifiedLines = trimmedLine.filter((line) => !(line[0]=="("&&line[line.length-1]==")"));
       modifiedLines.forEach((lines) => console.log(lines));
     } else {
