@@ -45,7 +45,7 @@ function programIntro(currentfiles) {
 function gitAdd() {
   const git_add = spawn(command_name, ["add", ...files]);
   handle_child_process(git_add, (callback) => {
-    console.log(changeTextColor("Changes tracked", 32));
+    console.log(changeTextColor("Changes staged", 32));
 
     commit();
   });
