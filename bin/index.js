@@ -114,12 +114,13 @@ function handle_child_process(child, callback) {
  :  ${data}`);
 
  //checking pushed succeced or not 
+ if (child.spawnargs[1] == "push") {
     if (`${data}`.includes(`${brach_name} -> ${brach_name}`)) {
       console.log(
         changeTextColor(`Changes pushed to ${brach_name} \u2714`, 32)
       );
     } else {
-      if (child.spawnargs[1] == "push") {
+    
         console.log(
           changeTextColor("seems failed to push check above message", 31)
         );
