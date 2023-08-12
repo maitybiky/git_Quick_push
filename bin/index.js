@@ -78,7 +78,6 @@ const push = () => {
   const git_push = spawn(command_name, ["push", "origin", brach_name]);
   handle_child_process(git_push, (callback) => {
     stopLoading(loadingAnimation);
-    
   });
 };
 
@@ -109,7 +108,14 @@ function handle_child_process(child, callback) {
     }
 
     console.error(`
-:ff ${data}`);
+     :  ${data}`);
+    if (`${data}`.includes(`${brach_name} -> ${brach_name}`)) {
+      console.log(
+        changeTextColor(`Changes pushed to ${brach_name} \u2714`, 32)
+      );
+    }else{
+      console.log(changeTextColor("seems failed to push check above message",33));
+    }
   });
 
   // Listen for 'error' event from the child process
