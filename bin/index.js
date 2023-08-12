@@ -116,7 +116,7 @@ function handle_child_process(child, callback) {
     }else{
       if(child.spawnargs[1]=="push"){
 
-        console.log(changeTextColor("seems failed to push check above message",35));
+        console.log(changeTextColor("seems failed to push check above message",36));
       }
     }
   });
