@@ -86,7 +86,7 @@ const push = () => {
 //!? Handling child process
 
 function handle_child_process(child, callback) {
-  console.log('child.argv', child.argv)
+  console.log('child.argv', child)
   // listens for the standard output (stdout) of the child process
   let ERR_CODE = false;
   child.stdout.on("data", (data) => {
@@ -94,7 +94,7 @@ function handle_child_process(child, callback) {
     console.log(`${data}`);
   });
 
-  // listens for the standard error (stderr) of the child process
+  // listens for the standard err of the child process
   child.stderr.on("data", (data) => {
     if (data.includes("up-to-date")) {
       callback(true);
