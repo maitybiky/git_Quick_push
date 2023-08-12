@@ -34,12 +34,9 @@ function programIntro(currentfiles) {
   console.log(changeTextColor(`Brach name         : ${brach_name}`, 35));
   console.log(changeTextColor(`[git status]`, 36));
 
-  //? initiating git status command 
-  const gitstat = spawn(command_name, ["status"]);
-  handle_child_process(gitstat, () => {
-    console.log("");
-    gitAdd(); //? initiating git add command
-  });
+
+  gitAdd(); //? initiating git add command
+ 
 }
 
 //!? Tracking Changes
@@ -47,7 +44,13 @@ function gitAdd() {
   const git_add = spawn(command_name, ["add", ...files]);
   handle_child_process(git_add, (callback) => {
     console.log(changeTextColor("Changes staged \u2714", 32));
-    commit(); //? initiaing git commit command
+    //? showing git status before commite
+    const gitstat = spawn(command_name, ["status"]);
+    handle_child_process(gitstat, () => {
+      console.log("");
+      commit(); //? initiaing git commit command
+    });
+   
   });
 }
 
