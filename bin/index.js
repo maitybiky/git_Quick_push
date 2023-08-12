@@ -79,7 +79,9 @@ const push = () => {
   handle_child_process(git_push, (callback) => {
     stopLoading(loadingAnimation);
     if (!callback)
-      console.log(changeTextColor(`Changes pushed to ${brach_name} \u2714`, 32));
+      console.log(
+        changeTextColor(`Changes pushed to ${brach_name} \u2714`, 32)
+      );
   });
 };
 
@@ -92,8 +94,10 @@ function handle_child_process(child, callback) {
     if (data.includes("working tree clean")) ERR_CODE = true;
     if (("child.argv", child.spawnargs[1] == "status")) {
       const lines = `${data}`.split("\n");
-      let trimmedLine=lines.map(it=>it.trim())
-      const modifiedLines = trimmedLine.filter((line) => !(line[0]=="("&&line[line.length-1]==")"));
+      let trimmedLine = lines.map((it) => it.trim());
+      const modifiedLines = trimmedLine.filter(
+        (line) => !(line[0] == "(" && line[line.length - 1] == ")")
+      );
       modifiedLines.forEach((lines) => console.log(lines));
     } else {
       console.log(`${data}`);
