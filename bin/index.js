@@ -33,7 +33,7 @@ function programIntro(currentfiles) {
   console.log(changeTextColor(`Commit message     : ${commit_message}`, 35));
   console.log(changeTextColor(`Brach name         : ${brach_name}`, 35));
   console.log(changeTextColor(`[git status]`, 36));
-  console.log("");
+
   const gitstat = spawn(command_name, ["status"]);
   handle_child_process(gitstat, () => {
     console.log("");
@@ -95,7 +95,7 @@ function handle_child_process(child, callback) {
       const lines = `${data}`.split("\n");
       const modifiedLines = lines.filter((line) => line.includes("modified:"));
 
-      console.log(`${modifiedLines}`.replace("\t"," "));
+      console.log(`${modifiedLines}`.replace("\t","\n"));
     } else {
       console.log(`${data}`);
     }
