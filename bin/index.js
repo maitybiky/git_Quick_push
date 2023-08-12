@@ -114,7 +114,10 @@ function handle_child_process(child, callback) {
         changeTextColor(`Changes pushed to ${brach_name} \u2714`, 32)
       );
     }else{
-      console.log(changeTextColor("seems failed to push check above message",33));
+      if(child.spawnargs[1]=="push"){
+
+        console.log(changeTextColor("seems failed to push check above message",34));
+      }
     }
   });
 
