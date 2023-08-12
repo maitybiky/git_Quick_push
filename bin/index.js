@@ -57,6 +57,7 @@ function gitAdd() {
 
 //!? Commiting Changes
 const commit = () => {
+  console.log(changeTextColor("Commiting...",35));
   const git_commit = spawn(command_name, ["commit", "-m", commit_message]);
 
   handle_child_process(git_commit, (callback) => {
