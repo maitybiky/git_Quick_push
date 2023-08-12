@@ -78,10 +78,7 @@ const push = () => {
   const git_push = spawn(command_name, ["push", "origin", brach_name]);
   handle_child_process(git_push, (callback) => {
     stopLoading(loadingAnimation);
-    if (!callback)
-      console.log(
-        changeTextColor(`Changes pushed to ${brach_name} \u2714`, 32)
-      );
+    
   });
 };
 
@@ -100,7 +97,7 @@ function handle_child_process(child, callback) {
       );
       modifiedLines.forEach((lines) => console.log(lines));
     } else {
-      console.log(`${data}`);
+      console.log(`d${data}`);
     }
   });
 

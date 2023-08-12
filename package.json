@@ -1,6 +1,6 @@
 {
   "name": "gytfast",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A hassle-free npm module for automating Git directory tracking, committing changes, and pushing to your remote repository with a single, simple command",
   "main": "index.js",
   "bin": {
