@@ -1,7 +1,9 @@
 
 # gytfast
 
-A  npm module for automating Git directory tracking, committing changes, and pushing to your remote repository with a single, simple command
+A  npm module for automating Git directory tracking, committing changes, and pushing to your remote repository with a single, command
+
+basically git add ,commit push in one go
 
 ## Installation
 
